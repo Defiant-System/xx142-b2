@@ -6,7 +6,7 @@ const STATE_DEAD = 3
 const STATE_FADEOUT = 4
 const STATE_COMPLETE = 5
 
-class Game {
+class Gaming {
 	constructor(levels) {
 		this.level;
 		this.player;
@@ -17,6 +17,7 @@ class Game {
 		this.fadeTimer = 0;
 		this.state = STATE_TITLE;
 
+		this.levels = levels;
 		this.levelNameShowed = -1
 		this.buttons = {}
 

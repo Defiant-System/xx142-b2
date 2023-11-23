@@ -1,9 +1,10 @@
 
+@import "./classes/vectors.js"
 @import "./classes/drawing.js"
 @import "./classes/game.js"
 @import "./classes/player.js"
 @import "./classes/ghost.js"
-@import "./modules/vectors.js"
+@import "./classes/level.js"
 
 @import "./modules/math.js"
 @import "./modules/settings.js"
@@ -14,12 +15,11 @@
 @import "./modules/mat4.js"
 @import "./modules/collision.js"
 @import "./modules/build3d.js"
-@import "./modules/level.js"
 
 @import "./modules/test.js"
 
-let draw;
-let game;
+let Draw;
+let Game;
 
 
 const xx142b2 = {
@@ -27,8 +27,8 @@ const xx142b2 = {
 		// fast references
 		this.content = window.find("content");
 		// init game
-		draw = new Drawing(window.find("canvas.cvs"));
-		game = new Game(levels);
+		Draw = new Drawing(window.find("canvas.cvs"));
+		Game = new Gaming(levels);
 
 		// DEV-ONLY-START
 		Test.init(this);

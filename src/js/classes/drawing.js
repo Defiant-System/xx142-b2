@@ -11,11 +11,11 @@ class Drawing {
 		this.vertex_buffer = this.createGlBuffer(builtVertices);
 		this.normal_buffer = this.createGlBuffer(builtNormals);
 		this.colors_buffer = this.createGlBuffer(builtColors);
-		this.index_buffer = this.createGlBuffer(builtIndices, gl.ELEMENT_ARRAY_BUFFER);
+		this.index_buffer = this.createGlBuffer(builtIndices, this.gl.ELEMENT_ARRAY_BUFFER);
 
 		let cameraRotX = 1;
 		let cameraRotY = 0;
-		let cameraPos = null;
+		this.cameraPos = null;
 
 		let viewMatrix = new Float32Array(16);
 		let projectionMatrix = new Float32Array(16);
@@ -61,20 +61,20 @@ class Drawing {
 	}
 
 	createGlBuffer(items, type = this.gl.ARRAY_BUFFER) {
-		let result = gl.createBuffer();
-		gl.bindBuffer(type, result);
-		gl.bufferData(type, items, gl.STATIC_DRAW);
+		let result = this.gl.createBuffer();
+		this.gl.bindBuffer(type, result);
+		this.gl.bufferData(type, items, this.gl.STATIC_DRAW);
 		return result;
 	}
 
 	createGlShasder(program, input, type) {
-		let shader = gl.createShader(type);
-		gl.shaderSource(shader, input);
-		gl.compileShader(shader);
-		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-			console.log(`Shader compilation failed: ${gl.getShaderInfoLog(shader)}`);
+		let shader = this.gl.createShader(type);
+		this.gl.shaderSource(shader, input);
+		this.gl.compileShader(shader);
+		if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
+			console.log(`Shader compilation failed: ${this.gl.getShaderInfoLog(shader)}`);
 		}
-		gl.attachShader(program, shader);
+		this.gl.attachShader(program, shader);
 	}
 
 	interpolate(position, movementVector) {
@@ -82,25 +82,25 @@ class Drawing {
 	}
 
 	resetCamera() {
-		cameraPos = null;
+		this.cameraPos = null;
 	}
 
 	setCamera(position, movementVector) {
 		let currentPlayerPos = interpolate(position, movementVector);
 		let desiredCameraPos = [currentPlayerPos.x, 250, -currentPlayerPos.y - 100];
 
-		if (cameraPos === null) {
-			cameraPos = desiredCameraPos;
+		if (this.cameraPos === null) {
+			this.cameraPos = desiredCameraPos;
 		}
 
-		let cameraMovementVector = Vec3.sub(desiredCameraPos, cameraPos);
+		let cameraMovementVector = Vec3.sub(desiredCameraPos, this.cameraPos);
 		let length = Vec3.len(cameraMovementVector);
 		if (length > 0) {
-			cameraPos = Vec3.add(cameraPos, Vec3.mul(Vec3.normalize(cameraMovementVector), Math.pow(length, 2) * 0.001));
+			this.cameraPos = Vec3.add(this.cameraPos, Vec3.mul(Vec3.normalize(cameraMovementVector), Math.pow(length, 2) * 0.001));
 		}
 
-		cameraRotX = 1 + (cameraPos[2] - desiredCameraPos[2]) / 1000;
-		cameraRotY = -(cameraPos[0] - desiredCameraPos[0]) / 3000;
+		cameraRotX = 1 + (this.cameraPos[2] - desiredCameraPos[2]) / 1000;
+		cameraRotY = -(this.cameraPos[0] - desiredCameraPos[0]) / 3000;
 
 		playerLightPosition[0] = -currentPlayerPos.x * glScale;
 		playerLightPosition[2] = currentPlayerPos.y * glScale;
@@ -109,13 +109,13 @@ class Drawing {
 	bg() {
 		calcViewMatrix();
 
-		gl.enable(gl.DEPTH_TEST);
-		gl.depthFunc(gl.LEQUAL);
-		gl.clearColor(0, 0, 0, 1);
-		gl.clearDepth(1.0);
+		this.gl.enable(this.gl.DEPTH_TEST);
+		this.gl.depthFunc(this.gl.LEQUAL);
+		this.gl.clearColor(0, 0, 0, 1);
+		this.gl.clearDepth(1.0);
 
-		gl.viewport(0.0, 0.0, canvasWidth, canvasHeight);
-		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		this.gl.viewport(0.0, 0.0, canvasWidth, canvasHeight);
+		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 	}
 
 	timer(time) {
@@ -173,9 +173,9 @@ class Drawing {
 		calcViewMatrix();
 		mat4Translate(viewMatrix, -pos.x * glScale, -3.1 * glScale, pos.y * glScale);
 		mat4RotateY(viewMatrix, playerRotation(player, player.drawMovementVector));
-		gl.uniformMatrix4fv(uVmatrix, false, viewMatrix);
-		gl.uniform3f(uAmbientColor, 1, 1, 1);
-		gl.drawElements(gl.TRIANGLES, builtSprites.player.ibCount, gl.UNSIGNED_SHORT, builtSprites.player.ibStart * 2);
+		this.gl.uniformMatrix4fv(uVmatrix, false, viewMatrix);
+		this.gl.uniform3f(uAmbientColor, 1, 1, 1);
+		this.gl.drawElements(this.gl.TRIANGLES, builtSprites.player.ibCount, this.gl.UNSIGNED_SHORT, builtSprites.player.ibStart * 2);
 	}
 
 	ghost(ghost) {
@@ -186,8 +186,8 @@ class Drawing {
 		calcViewMatrix();
 		mat4Translate(viewMatrix, -pos.x * glScale, -3 * glScale, pos.y * glScale);
 		mat4RotateY(viewMatrix, playerRotation(ghost, ghost.movementVector));
-		gl.uniformMatrix4fv(uVmatrix, false, viewMatrix);
-		gl.drawElements(gl.TRIANGLES, builtSprites.ghost.ibCount, gl.UNSIGNED_SHORT, builtSprites.ghost.ibStart * 2);
+		this.gl.uniformMatrix4fv(uVmatrix, false, viewMatrix);
+		this.gl.drawElements(this.gl.TRIANGLES, builtSprites.ghost.ibCount, this.gl.UNSIGNED_SHORT, builtSprites.ghost.ibStart * 2);
 		return true;
 	}
 
@@ -202,56 +202,56 @@ class Drawing {
 
 		fadeLevel = clamp01(fadeLevel + (gameState === STATE_FADEOUT ? -timeDelta : timeDelta));
 
-		gl.enable(gl.CULL_FACE);
-		gl.cullFace(gl.BACK);
-		gl.useProgram(shaderProgram);
+		this.gl.enable(this.gl.CULL_FACE);
+		this.gl.cullFace(this.gl.BACK);
+		this.gl.useProgram(shaderProgram);
 
-		gl.uniform3f(uTranslation, 0, 0, 0);
-		gl.uniform3f(uAmbientColor, 1, 1, 1);
-		gl.uniformMatrix4fv(uPmatrix, false, projectionMatrix);
-		gl.uniformMatrix4fv(uVmatrix, false, viewMatrix);
-		gl.uniform3fv(uPlayerLightPosition, playerLightPosition);
-		gl.uniform1f(uFrameTime, frameTime);
+		this.gl.uniform3f(uTranslation, 0, 0, 0);
+		this.gl.uniform3f(uAmbientColor, 1, 1, 1);
+		this.gl.uniformMatrix4fv(uPmatrix, false, projectionMatrix);
+		this.gl.uniformMatrix4fv(uVmatrix, false, viewMatrix);
+		this.gl.uniform3fv(uPlayerLightPosition, playerLightPosition);
+		this.gl.uniform1f(uFrameTime, frameTime);
 
-		gl.uniform1f(uSurfaceSensitivity, fadeLevel);
-		gl.uniform1f(uFade, fadeLevel);
+		this.gl.uniform1f(uSurfaceSensitivity, fadeLevel);
+		this.gl.uniform1f(uFade, fadeLevel);
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertex_buffer);
 
-		gl.vertexAttribPointer(uPosition, 3, gl.FLOAT, false, 0, 0);
-		gl.enableVertexAttribArray(uPosition);
+		this.gl.vertexAttribPointer(uPosition, 3, this.gl.FLOAT, false, 0, 0);
+		this.gl.enableVertexAttribArray(uPosition);
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, normal_buffer);
-		gl.vertexAttribPointer(uNormal, 3, gl.FLOAT, true, 0, 0);
-		gl.enableVertexAttribArray(uNormal);
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, normal_buffer);
+		this.gl.vertexAttribPointer(uNormal, 3, this.gl.FLOAT, true, 0, 0);
+		this.gl.enableVertexAttribArray(uNormal);
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, colors_buffer);
-		gl.vertexAttribPointer(uColor, 3, gl.FLOAT, false, 0, 0);
-		gl.enableVertexAttribArray(uColor);
+		this.gl.bindBuffer(this.gl.ARRAY_BUFFER, colors_buffer);
+		this.gl.vertexAttribPointer(uColor, 3, this.gl.FLOAT, false, 0, 0);
+		this.gl.enableVertexAttribArray(uColor);
 
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
-		gl.drawElements(gl.TRIANGLES, level.ibCount, gl.UNSIGNED_SHORT, level.ibStart * 2);
+		this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+		this.gl.drawElements(this.gl.TRIANGLES, level.ibCount, this.gl.UNSIGNED_SHORT, level.ibStart * 2);
 
 		for (let d of level.doors) {
 			if (!d.open) {
-				gl.drawElements(gl.TRIANGLES, d.ibCount, gl.UNSIGNED_SHORT, d.ibStart * 2);
+				this.gl.drawElements(this.gl.TRIANGLES, d.ibCount, this.gl.UNSIGNED_SHORT, d.ibStart * 2);
 			}
 		}
 
-		gl.uniform3f(uTranslation, -level.start.x * glScale, glScale, level.start.y * glScale);
+		this.gl.uniform3f(uTranslation, -level.start.x * glScale, glScale, level.start.y * glScale);
 
 		startLight = fadeLevel * clamp01(startLight + timeDelta * (gameState === STATE_FADEIN ? -2 : 3));
-		gl.uniform1f(uSurfaceSensitivity, startLight / 3);
-		gl.uniform3f(uAmbientColor, 0.2 * startLight, (1 - startLight) / 4, 0.5);
-		gl.drawElements(gl.TRIANGLES, builtSprites.pad.ibCount, gl.UNSIGNED_SHORT, builtSprites.pad.ibStart * 2);
+		this.gl.uniform1f(uSurfaceSensitivity, startLight / 3);
+		this.gl.uniform3f(uAmbientColor, 0.2 * startLight, (1 - startLight) / 4, 0.5);
+		this.gl.drawElements(this.gl.TRIANGLES, builtSprites.pad.ibCount, this.gl.UNSIGNED_SHORT, builtSprites.pad.ibStart * 2);
 
-		gl.uniform1f(uSurfaceSensitivity, fadeLevel * 0.4);
-		gl.uniform3f(uTranslation, -level.end.x * glScale, 3 * glScale, level.end.y * glScale);
+		this.gl.uniform1f(uSurfaceSensitivity, fadeLevel * 0.4);
+		this.gl.uniform3f(uTranslation, -level.end.x * glScale, 3 * glScale, level.end.y * glScale);
 		endLight = lerp(endLight, lerp(0.7, 1, 1 - abs(cos(frameTime * 1.5))), timeDelta * 4);
-		gl.uniform3f(uAmbientColor, 0, endLight / 1.3, endLight);
+		this.gl.uniform3f(uAmbientColor, 0, endLight / 1.3, endLight);
 
 		let endSprite = level.last ? builtSprites.core : builtSprites.pad;
-		gl.drawElements(gl.TRIANGLES, endSprite.ibCount, gl.UNSIGNED_SHORT, endSprite.ibStart * 2);
+		this.gl.drawElements(this.gl.TRIANGLES, endSprite.ibCount, this.gl.UNSIGNED_SHORT, endSprite.ibStart * 2);
 
 		for (let s of level.switches) {
 			let { uid, pressed } = s;
@@ -265,15 +265,15 @@ class Drawing {
 			switchState.g = lerp(g, pressed ? 0.3 : 0, timeDelta * 5);
 			switchState.p = lerp(switchState.p, pressed ? 3.8 * glScale : 0, timeDelta * 8);
 
-			gl.uniform1f(uSurfaceSensitivity, fadeLevel * g);
+			this.gl.uniform1f(uSurfaceSensitivity, fadeLevel * g);
 
-			gl.uniform3f(uTranslation, -s.x * glScale, p, s.y * glScale);
-			gl.uniform3f(uAmbientColor, r, g, 0);
-			gl.drawElements(gl.TRIANGLES, builtSprites.pad.ibCount, gl.UNSIGNED_SHORT, builtSprites.pad.ibStart * 2);
+			this.gl.uniform3f(uTranslation, -s.x * glScale, p, s.y * glScale);
+			this.gl.uniform3f(uAmbientColor, r, g, 0);
+			this.gl.drawElements(this.gl.TRIANGLES, builtSprites.pad.ibCount, this.gl.UNSIGNED_SHORT, builtSprites.pad.ibStart * 2);
 		}
 
-		gl.uniform1f(uSurfaceSensitivity, 0);
-		gl.uniform3f(uTranslation, 0, 0, 0);
+		this.gl.uniform1f(uSurfaceSensitivity, 0);
+		this.gl.uniform3f(uTranslation, 0, 0, 0);
 	}
 
 	titleScreen() {
@@ -289,7 +289,7 @@ class Drawing {
 		mat4RotateX(out, cameraRotX);
 		mat4RotateY(out, cameraRotY);
 		mat4RotateZ(out, -PI);
-		mat4Translate(out, cameraPos[0] * glScale, cameraPos[1] * glScale, cameraPos[2] * glScale);
+		mat4Translate(out, this.cameraPos[0] * glScale, this.cameraPos[1] * glScale, this.cameraPos[2] * glScale);
 	}
 
 	calcProjectionMatrix() {
