@@ -5,8 +5,8 @@
 		<meta name="author" value="Ben Clark" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="repository" value="https://github.com/Defiant-System/xx142b2"/>
-		<meta name="width" value="600"/>
-		<meta name="height" value="400"/>
+		<meta name="width" value="840"/>
+		<meta name="height" value="560"/>
 		<meta name="top" value="120"/>
 		<meta name="left" value="120"/>
 		<meta name="minimize"/>
@@ -18,7 +18,6 @@
 		<meta name="content" value="src/partials/content.htm"/>
 		<meta name="xsl" value="src/partials/templates.xsl"/>
 
-		@import "src/partials/toolbar.xml"
 		@import "src/partials/menubar.xml"
 	</Head>
 </Application>
