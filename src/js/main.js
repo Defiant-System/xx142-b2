@@ -1,7 +1,7 @@
 
 @import "./classes/vectors.js"
 @import "./classes/drawing.js"
-@import "./classes/game.js"
+@import "./classes/gaming.js"
 @import "./classes/player.js"
 @import "./classes/ghost.js"
 @import "./classes/level.js"

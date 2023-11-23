@@ -1,10 +1,10 @@
 
-const STATE_TITLE = 0
-const STATE_FADEIN = 1
-const STATE_PLAY = 2
-const STATE_DEAD = 3
-const STATE_FADEOUT = 4
-const STATE_COMPLETE = 5
+let STATE_TITLE = 0
+let STATE_FADEIN = 1
+let STATE_PLAY = 2
+let STATE_DEAD = 3
+let STATE_FADEOUT = 4
+let STATE_COMPLETE = 5
 
 class Gaming {
 	constructor(levels) {
@@ -22,10 +22,49 @@ class Gaming {
 		this.buttons = {}
 
 		this.loadLevel(this.currentLevel);
+
+		//stores incrementing value (in seconds) until the next tick, when it's then decremented by 1 tick's length
+		this.accumulator = 0;
+		this.previous;
+
+		let Self = this;
+
+		this.fpsControl = karaqu.FpsControl({
+			fps: 60,
+			callback(time) {
+				if (Self.previous === undefined) {
+					Self.previous = time;
+				}
+				let delta = (time - Self.previous) / 1e3;
+				Self.accumulator += delta;
+
+				if (Self.accumulator > 1.0 / settings_tps) {
+					Self.accumulator -= 1.0 / settings_tps;
+					Self.tick();
+				}
+				if (Self.accumulator > 1.0 / settings_tps) {
+					Self.accumulator = 1.0 / settings_tps;
+				}
+
+				Self.draw(Self.accumulator, time / 1e3, delta);
+				Self.previous = time;
+			}
+		});
 	}
 
 	showLevelName() {
 		console.log(level.last ? "THE MEMORY CORE" : `Level ${currentLevel}`);
+	}
+
+	start() {
+		// console.log("started");
+		this.state = STATE_FADEIN;
+		this.fadeTimer = 1.0;
+		this.fpsControl.start();
+	}
+
+	stop() {
+		this.fpsControl.stop();
 	}
 
 	reset() {
@@ -64,9 +103,9 @@ class Gaming {
 				Draw.setCamera(this.player.position, this.player.movementVector);
 				Draw.bg();
 				Draw.level(this.level.getLevel(), frameTime, timeDelta, this.state);
-				Draw.player(player);
+				Draw.player(this.player);
 				if (this.state === STATE_PLAY) {
-					for (const g of ghosts) {
+					for (let g of ghosts) {
 						Draw.ghost(g);
 					}
 				}
@@ -117,7 +156,7 @@ class Gaming {
 				return;
 			}
 			history[this.currentTick] = this.player.move(this.buttons);
-			for (const g of this.ghosts) {
+			for (let g of this.ghosts) {
 				g.tick(this.currentTick);
 			}
 			++this.currentTick;
@@ -136,9 +175,7 @@ class Gaming {
 
 	buttonDown(key) {
 		if (this.state === STATE_TITLE) {
-			console.log(started);
-			this.state = STATE_FADEIN;
-			this.fadeTimer = 1.0;
+			this.start();
 			return;
 		}
 		if (this.state === STATE_FADEIN && this.fadeTimer <= 0) {

@@ -2,6 +2,7 @@
 let Test = {
 	init(APP) {
 		// return;
-		// setTimeout(() => window.find(`section[data-view="accountPurchases"] .icon-padlock`).trigger("click"), 1000);
+		setTimeout(() => Game.start(), 300);
+		setTimeout(() => Game.stop(), 2000);
 	}
 };

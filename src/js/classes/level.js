@@ -1,12 +1,13 @@
 
 class Level {
 	constructor(levelObject) {
-		let currentLevel = JSON.parse(JSON.stringify(levelObject));
-		this.last = !!currentLevel.last;
+		this.currentLevel = JSON.parse(JSON.stringify(levelObject));
+		this.last = !!this.currentLevel.last;
 		this.levelObject = levelObject;
 	}
 
 	doesCircleCollide(position, radius) {
+		let currentLevel = this.currentLevel;
 		for (let i = 0; i < currentLevel.walls.length; i++) {
 			for (let j = 1; j < currentLevel.walls[i].length; j++) {
 				let colPos = doesLineInterceptCircle(currentLevel.walls[i][j - 1], currentLevel.walls[i][j], position, radius);
@@ -35,13 +36,13 @@ class Level {
 	}
 
 	toggleDoor(doorName) {
-		let door = currentLevel.doors.find(d => d.name === doorName);
+		let door = this.currentLevel.doors.find(d => d.name === doorName);
 		door.open = !door.open;
 	}
 
 	handleSwitches(oldPos, newPos, radius) {
 		if (oldPos.x !== newPos.x || oldPos.y !== newPos.y) {
-			for (let s of currentLevel.switches) {
+			for (let s of this.currentLevel.switches) {
 				let switchPos = new Vec2(s.x, s.y);
 				let wasTouching = oldPos.sub(switchPos).len() < radius + settings_switchRadius;
 				let nowTouching = newPos.sub(switchPos).len() < radius + settings_switchRadius;
@@ -82,7 +83,7 @@ class Level {
 	}
 
 	ghostRemoved(position, radius) {
-		for (let s of currentLevel.switches) {
+		for (let s of this.currentLevel.switches) {
 			let isTouching = position.sub(new Vec2(s.x, s.y)).len() < radius + settings_switchRadius;
 			if (isTouching) {
 				if (s.type !== 'single') {
@@ -102,7 +103,7 @@ class Level {
 	}
 
 	reset() {
-		currentLevel = JSON.parse(JSON.stringify(this.levelObject));
+		this.currentLevel = JSON.parse(JSON.stringify(this.levelObject));
 	}
 
 	interact(oldPos, radius, plannedVector) {
@@ -121,6 +122,6 @@ class Level {
 	}
 
 	getLevel() {
-		return currentLevel;
+		return this.currentLevel;
 	}
 }

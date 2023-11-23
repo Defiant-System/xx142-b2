@@ -1,3 +1,4 @@
+
 const STATE_TITLE = 0
 const STATE_FADEIN = 1
 const STATE_PLAY = 2
