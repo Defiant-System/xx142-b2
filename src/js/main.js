@@ -43,34 +43,34 @@ const xx142b2 = {
 			case "window.init":
 				break;
 			case "window.keydown":
+				if (Game.state === STATE_FADEIN && Game.fadeTimer <= 0) {
+					Game.state = STATE_PLAY;
+				}
+				// console.log(event);
 				switch (event.char) {
 					case "w":
-					case "up":    Keys.up = 1; break;
+					case "up":    Game.buttons.up = true; break;
 					case "s":
-					case "down":  Keys.down = 1; break;
+					case "down":  Game.buttons.down = true; break;
 					case "a":
-					case "left":  Keys.left = 1; break;
+					case "left":  Game.buttons.left = true; break;
 					case "d":
-					case "right": Keys.right = 1; break;
-					case "esc":
-						break;
-					case "p":
-						if (Game.paused) Game.resume();
-						else Game.pause();
-						break;
+					case "right": Game.buttons.right = true; break;
+					case "backspace": Game.die(); break;
+					case "p": Game[Game.paused ? "resume" : "pause" ](); break;
 				}
 				break;
 			case "window.keyup":
-				// switch (event.char) {
-				// 	case "w":
-				// 	case "up":    Keys.up = 0; break;
-				// 	case "s":
-				// 	case "down":  Keys.down = 0; break;
-				// 	case "a":
-				// 	case "left":  Keys.left = 0; break;
-				// 	case "d":
-				// 	case "right": Keys.right = 0; break;
-				// }
+				switch (event.char) {
+					case "w":
+					case "up":    Game.buttons.up = false; break;
+					case "s":
+					case "down":  Game.buttons.down = false; break;
+					case "a":
+					case "left":  Game.buttons.left = false; break;
+					case "d":
+					case "right": Game.buttons.right = false; break;
+				}
 				break;
 			// custom events
 			case "open-help":

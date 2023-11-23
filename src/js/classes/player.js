@@ -1,7 +1,8 @@
 
 class Player {
 	constructor(level) {
-		this.position = level.getStart();
+		this.level = level;
+		this.position = this.level.getStart();
 		this.movementVector = new Vec2(0, 0); //stores last movement vector
 		this.drawMovementVector = new Vec2(0, -1);
 	}
@@ -31,7 +32,7 @@ class Player {
 			this.drawMovementVector = movement;
 		}
 
-		this.movementVector = level.interact(this.position, settings_playerRadius, movement);
+		this.movementVector = this.level.interact(this.position, settings_playerRadius, movement);
 		this.position = this.position.add(this.movementVector);
 		if (this.movementVector.x || this.movementVector.y) {
 			Sounds.move();

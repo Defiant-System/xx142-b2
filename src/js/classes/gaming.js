@@ -8,7 +8,6 @@ let STATE_COMPLETE = 5
 
 class Gaming {
 	constructor(levels) {
-		this.level;
 		this.player;
 		this.ghosts = [];
 		this.currentTick = 0;
@@ -17,6 +16,7 @@ class Gaming {
 		this.fadeTimer = 0;
 		this.state = STATE_TITLE;
 
+		this.level;
 		this.levels = levels;
 		this.levelNameShowed = -1
 		this.buttons = {}
@@ -52,10 +52,6 @@ class Gaming {
 		});
 	}
 
-	showLevelName() {
-		console.log(this.level.last ? "THE MEMORY CORE" : `Level ${this.currentLevel}`);
-	}
-
 	get paused() {
 		return this._pause;
 	}
@@ -84,7 +80,7 @@ class Gaming {
 		for (let g of this.ghosts) {
 			g.reset();
 		}
-		this.ghosts.push(new Ghost(history, level));
+		this.ghosts.push(new Ghost(this.history, this.level));
 		if (this.ghosts.length > settings_maxGhosts) {
 			this.ghosts.shift();
 		}
@@ -93,7 +89,7 @@ class Gaming {
 
 		//reset level and player
 		this.level.reset();
-		this.player = new Player(level);
+		this.player = new Player(this.level);
 		this.state = STATE_FADEIN;
 		Draw.scale = 1.5;
 	}
@@ -118,7 +114,7 @@ class Gaming {
 				Draw.level(this.level.getLevel(), frameTime, timeDelta, this.state);
 				Draw.player(this.player);
 				if (this.state === STATE_PLAY) {
-					for (let g of ghosts) {
+					for (let g of this.ghosts) {
 						Draw.ghost(g);
 					}
 				}
@@ -133,7 +129,7 @@ class Gaming {
 	tick() {
 		if (this.state === STATE_FADEIN && this.levelNameShowed !== this.currentLevel) {
 			this.levelNameShowed = this.currentLevel;
-			this.showLevelName();
+			console.log(this.level.last ? "THE MEMORY CORE" : `Level ${this.currentLevel}`);
 		}
 
 		if (this.state === STATE_FADEIN || this.state === STATE_FADEOUT) {
@@ -146,7 +142,7 @@ class Gaming {
 			let mv = new Vec2(0, 0);
 			while (mv.len() < 40 && this.currentTick > 0) {
 				--this.currentTick;
-				mv = mv.sub(history[this.currentTick]);
+				mv = mv.sub(this.history[this.currentTick]);
 			}
 			Draw.scale /= 0.95;
 			this.player.forceMove(mv);
@@ -168,7 +164,7 @@ class Gaming {
 				this.die();
 				return;
 			}
-			history[this.currentTick] = this.player.move(this.buttons);
+			this.history[this.currentTick] = this.player.move(this.buttons);
 			for (let g of this.ghosts) {
 				g.tick(this.currentTick);
 			}
@@ -184,27 +180,6 @@ class Gaming {
 				this.fadeTimer = 1.0;
 			}
 		}
-	}
-
-	buttonDown(key) {
-		if (this.state === STATE_TITLE) {
-			this.start();
-			return;
-		}
-		if (this.state === STATE_FADEIN && this.fadeTimer <= 0) {
-			this.state = STATE_PLAY;
-		}
-		this.buttons[key] = true;
-		if (key === 'back') {
-			this.die();
-		}
-	}
-
-	buttonUp(key) {
-		if (key === undefined) {
-			this.buttons = {};
-		}
-		this.buttons[key] = false;
 	}
 
 	loadLevel(index) {

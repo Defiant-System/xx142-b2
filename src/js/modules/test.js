@@ -2,7 +2,7 @@
 let Test = {
 	init(APP) {
 		// return;
-		setTimeout(() => Game.start(), 300);
-		setTimeout(() => Game.pause(), 2000);
+		setTimeout(() => Game.start(), 100);
+		// setTimeout(() => Game.pause(), 10000);
 	}
 };

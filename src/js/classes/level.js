@@ -12,7 +12,7 @@ class Level {
 			for (let j = 1; j < currentLevel.walls[i].length; j++) {
 				let colPos = doesLineInterceptCircle(currentLevel.walls[i][j - 1], currentLevel.walls[i][j], position, radius);
 				if (colPos) {;
-					return doesCircleCollide(colPos, radius) || colPos;
+					return this.doesCircleCollide(colPos, radius) || colPos;
 				}
 			}
 		}
@@ -28,7 +28,7 @@ class Level {
 				radius
 			);
 			if (colPos) {
-				return doesCircleCollide(colPos, radius) || colPos;
+				return this.doesCircleCollide(colPos, radius) || colPos;
 			}
 		}
 
@@ -51,21 +51,21 @@ class Level {
 					//only toggle if you're the first one on it
 					if (s.pressed === 0) {
 						for (let target of s.targets) {
-							toggleDoor(target);
+							this.toggleDoor(target);
 						}
 						Sounds.switchDown();
 					}
 					s.pressed++;
 				}
-				if (wasTouching && !nowTouching && s.type !== 'single') {
+				if (wasTouching && !nowTouching && s.type !== "single") {
 					if (s.pressed <= 0) {
 						continue;
 					}
 					s.pressed--;
 				}
-				if (wasTouching && !nowTouching && s.type === 'momentary' && s.pressed === 0) {
+				if (wasTouching && !nowTouching && s.type === "momentary" && s.pressed === 0) {
 					for (let target of s.targets) {
-						toggleDoor(target);
+						this.toggleDoor(target);
 					}
 				}
 				if (wasTouching && !nowTouching && s.pressed === 0) {
@@ -86,12 +86,12 @@ class Level {
 		for (let s of this.currentLevel.switches) {
 			let isTouching = position.sub(new Vec2(s.x, s.y)).len() < radius + settings_switchRadius;
 			if (isTouching) {
-				if (s.type !== 'single') {
+				if (s.type !== "single") {
 					s.pressed--;
 				}
-				if (s.pressed === 0 && s.type === 'momentary') {
+				if (s.pressed === 0 && s.type === "momentary") {
 					for (let target of s.targets) {
-						toggleDoor(target);
+						this.toggleDoor(target);
 					}
 				}
 			}
@@ -109,10 +109,10 @@ class Level {
 	interact(oldPos, radius, plannedVector) {
 		let newPos = oldPos.add(plannedVector);
 
-		let collisionPosition = doesCircleCollide(newPos, radius);
+		let collisionPosition = this.doesCircleCollide(newPos, radius);
 		newPos = collisionPosition || newPos;
-		handleSwitches(oldPos, newPos, radius);
-		handleEnd(newPos, radius);
+		this.handleSwitches(oldPos, newPos, radius);
+		this.handleEnd(newPos, radius);
 
 		if (collisionPosition) {
 			return collisionPosition.sub(oldPos);
