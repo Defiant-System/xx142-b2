@@ -39,8 +39,40 @@ const xx142b2 = {
 	},
 	dispatch(event) {
 		switch (event.type) {
+			// system events
 			case "window.init":
 				break;
+			case "window.keydown":
+				switch (event.char) {
+					case "w":
+					case "up":    Keys.up = 1; break;
+					case "s":
+					case "down":  Keys.down = 1; break;
+					case "a":
+					case "left":  Keys.left = 1; break;
+					case "d":
+					case "right": Keys.right = 1; break;
+					case "esc":
+						break;
+					case "p":
+						if (Game.paused) Game.resume();
+						else Game.pause();
+						break;
+				}
+				break;
+			case "window.keyup":
+				// switch (event.char) {
+				// 	case "w":
+				// 	case "up":    Keys.up = 0; break;
+				// 	case "s":
+				// 	case "down":  Keys.down = 0; break;
+				// 	case "a":
+				// 	case "left":  Keys.left = 0; break;
+				// 	case "d":
+				// 	case "right": Keys.right = 0; break;
+				// }
+				break;
+			// custom events
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
 				break;

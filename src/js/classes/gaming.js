@@ -56,16 +56,28 @@ class Gaming {
 		console.log(this.level.last ? "THE MEMORY CORE" : `Level ${this.currentLevel}`);
 	}
 
+	get paused() {
+		return this._pause;
+	}
+
 	start() {
 		console.log("started");
 		this.state = STATE_FADEIN;
 		this.fadeTimer = 1.0;
 		this.fpsControl.start();
+		this._pause = false;
 	}
 
-	stop() {
+	pause() {
 		console.log("stopped");
 		this.fpsControl.stop();
+		this._pause = true;
+	}
+
+	resume() {
+		console.log("resumed");
+		this.fpsControl.start();
+		this._pause = false;
 	}
 
 	reset() {
