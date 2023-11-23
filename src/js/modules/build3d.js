@@ -1,3 +1,4 @@
+
 const COLOR_DEEP_WALLS = colour(0, 50, 100)
 const COLOR_PILLARS = colour(0, 80, 230)
 const COLOR_SMALL_WALLS = colour(0, 100, 255)
@@ -24,7 +25,6 @@ const builtSprites = {
 	const indices = []
 
 	const topNormal = [0, 1, 0]
-
 	const vertexMap = new Map()
 
 	const getVertex = (xyz, color, normal = topNormal) => {

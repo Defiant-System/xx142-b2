@@ -1,12 +1,13 @@
+
 function doesLineInterceptCircle(A, B, C, radius) {
 	let dist
-	const v1x = B.x - A.x
-	const v1y = B.y - A.y
-	const v2x = C.x - A.x
-	const v2y = C.y - A.y
+	let v1x = B.x - A.x
+	let v1y = B.y - A.y
+	let v2x = C.x - A.x
+	let v2y = C.y - A.y
 	// get the unit distance along the line of the closest point to
 	// circle center
-	const u = (v2x * v1x + v2y * v1y) / (v1y * v1y + v1x * v1x)
+	let u = (v2x * v1x + v2y * v1y) / (v1y * v1y + v1x * v1x)
 
 	// if the point is on the line segment get the distance squared
 	// from that point to the circle center
@@ -19,8 +20,8 @@ function doesLineInterceptCircle(A, B, C, radius) {
 		dist = u < 0 ? (A.x - C.x) ** 2 + (A.y - C.y) ** 2 : (B.x - C.x) ** 2 + (B.y - C.y) ** 2
 	}
 	if (dist < radius * radius) {
-		const wall = new Vec2(A.x + v1x * u, A.y + v1y * u) //position on wall
-		const vec = C.sub(wall).normalize() //the vector from the wall towards the current circle position
+		let wall = new Vec2(A.x + v1x * u, A.y + v1y * u) //position on wall
+		let vec = C.sub(wall).normalize() //the vector from the wall towards the current circle position
 		return wall.add(vec.mul(radius + 0.1)) //return the position that the circle should be in
 	}
 	return false

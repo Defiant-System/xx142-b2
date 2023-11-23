@@ -1,3 +1,4 @@
+
 function Level(levelObject) {
 	let currentLevel = JSON.parse(JSON.stringify(levelObject))
 
