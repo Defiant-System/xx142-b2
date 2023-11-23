@@ -31,7 +31,7 @@ class Gaming {
 
 		this.fpsControl = karaqu.FpsControl({
 			fps: 60,
-			callback(time) {
+			callback(time=0) {
 				if (Self.previous === undefined) {
 					Self.previous = time;
 				}
@@ -53,17 +53,18 @@ class Gaming {
 	}
 
 	showLevelName() {
-		console.log(level.last ? "THE MEMORY CORE" : `Level ${currentLevel}`);
+		console.log(this.level.last ? "THE MEMORY CORE" : `Level ${this.currentLevel}`);
 	}
 
 	start() {
-		// console.log("started");
+		console.log("started");
 		this.state = STATE_FADEIN;
 		this.fadeTimer = 1.0;
 		this.fpsControl.start();
 	}
 
 	stop() {
+		console.log("stopped");
 		this.fpsControl.stop();
 	}
 

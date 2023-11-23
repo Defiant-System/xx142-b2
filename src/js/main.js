@@ -20,6 +20,7 @@
 
 let Draw;
 let Game;
+let levelIndex = 0;
 
 
 const xx142b2 = {
@@ -29,6 +30,8 @@ const xx142b2 = {
 		// init game
 		Draw = new Drawing(window.find("canvas.cvs"));
 		Game = new Gaming(levels);
+		Game.loadLevel(levelIndex);
+
 
 		// DEV-ONLY-START
 		Test.init(this);

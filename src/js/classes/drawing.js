@@ -10,7 +10,7 @@ class Drawing {
 
 		this.canvasWidth = width;
 		this.canvasHeight = height;
-		this.canvasWidth / this.canvasHeight;
+		this.canvasRatio = this.canvasWidth / this.canvasHeight;
 
 		this.vertex_buffer = this.createGlBuffer(builtVertices);
 		this.normal_buffer = this.createGlBuffer(builtNormals);
@@ -63,6 +63,8 @@ class Drawing {
 
 		this.gameState = STATE_FADEOUT;
 		this.levelState = new Map();
+		
+		this.calcProjectionMatrix();
 	}
 
 	createGlBuffer(items, type = this.gl.ARRAY_BUFFER) {
@@ -144,7 +146,7 @@ class Drawing {
 				this.timerR = r;
 				this.timerG = g;
 
-				let b = round(128 * v.x * v.x);
+				// let b = round(128 * v.x * v.x);
 				// elementT.style.color = `rgb(${r},${g},${b})`;
 			}
 
@@ -282,11 +284,11 @@ class Drawing {
 	}
 
 	titleScreen() {
-
+		console.log("titleScreen");
 	}
 
 	endScreen() {
-
+		console.log("endScreen");
 	}
 
 	calcViewMatrix(out = this.viewMatrix) {
