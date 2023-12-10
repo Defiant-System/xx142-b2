@@ -8,6 +8,8 @@ class Drawing {
 			height = cvs.parent().prop("offsetHeight");
 		this.cvs.attr({ width, height });
 
+		this.el = window.find(".view-game .timer");
+
 		this.canvasWidth = width;
 		this.canvasHeight = height;
 		this.canvasRatio = this.canvasWidth / this.canvasHeight;
@@ -156,6 +158,7 @@ class Drawing {
 					this.timerX = 1;
 					// elementT.className = "x";
 				}
+				this.el.html(s);
 				// elementT.innerText = s;
 			}
 		}
