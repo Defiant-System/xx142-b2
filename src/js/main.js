@@ -48,7 +48,13 @@ const xx142b2 = {
 				}
 				// console.log(event);
 				switch (event.char) {
-					case "esc": Game.start(); break;
+					case "esc":
+						if (Game.state === 0) {
+							Game.start();
+						} else {
+							Game.over();
+						}
+						break;
 					case "w":
 					case "up": Game.buttons.up = true; break;
 					case "s":

@@ -1,40 +1,42 @@
-<content data-show="intro">
-	<div class="view-intro">
-		<svg class="intro-view" viewBox="0 0 840 560">
-			<defs>
-				<filter id="texteffect">
-					<feGaussianBlur in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
-					<feComponentTransfer>
-						<feFuncA type="linear" slope="1" intercept="0"></feFuncA>
-					</feComponentTransfer>
-					<feComposite result="outer" in2="SourceGraphic" operator="out"></feComposite>
-					<feGaussianBlur result="pre-inner" in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
-					<feComposite in="SourceGraphic" in2="pre-inner" operator="out"></feComposite>
-					<feComponentTransfer result="inner">
-						<feFuncA type="linear" slope="1" intercept="0"></feFuncA>
-					</feComponentTransfer>
-					<feMerge>
-						<feMergeNode in="outer"></feMergeNode>
-						<feMergeNode in="inner"></feMergeNode>
-					</feMerge>
-					<feGaussianBlur stdDeviation="1"></feGaussianBlur>
-				</filter>
-				<linearGradient id="gradient" color-interpolation="sRGB" spreadMethod="repeat" x1="0" x2="0.25" y1="0.01" y2="0">
-					<stop stop-color="#348" offset="0%"></stop>
-					<stop stop-color="#aaf" offset="50%"></stop>
-					<stop stop-color="#348" offset="100%"></stop>
-				</linearGradient>
-				<mask id="textMask">
-					<g filter="url(#texteffect)">
-						<polyline stroke="#fff" points="840,17 720,17 696,33.1 552,33.1 528,17.1 312,17.1 288,33.1 144,33.1 120,17 0,17 "/>
-						<polyline stroke="#fff" points="840,542 720,542 696,525.9 552,525.9 528,541.9 312,541.9 288,525.9 144,525.9 120,542 0,542 "/>
-						<text id="text" x="420" y="120" text-anchor="middle" fill="#fff">xx142-b2</text>
-					</g>
-				</mask>
-			</defs>
-			<rect id="fill" mask="url(#textMask)" fill="url(#gradient)" x="0" y="0" width="4000" height="560"></rect>
-		</svg>
+<content data-show="level">
+	<svg class="hud" viewBox="0 0 840 560">
+		<defs>
+			<filter id="texteffect">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
+				<feComponentTransfer>
+					<feFuncA type="linear" slope="1" intercept="0"></feFuncA>
+				</feComponentTransfer>
+				<feComposite result="outer" in2="SourceGraphic" operator="out"></feComposite>
+				<feGaussianBlur result="pre-inner" in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
+				<feComposite in="SourceGraphic" in2="pre-inner" operator="out"></feComposite>
+				<feComponentTransfer result="inner">
+					<feFuncA type="linear" slope="1" intercept="0"></feFuncA>
+				</feComponentTransfer>
+				<feMerge>
+					<feMergeNode in="outer"></feMergeNode>
+					<feMergeNode in="inner"></feMergeNode>
+				</feMerge>
+				<feGaussianBlur stdDeviation="1"></feGaussianBlur>
+			</filter>
+			<linearGradient id="gradient" color-interpolation="sRGB" spreadMethod="repeat" x1="0" x2="0.25" y1="0.01" y2="0">
+				<stop stop-color="#348" offset="0%"></stop>
+				<stop stop-color="#aaf" offset="50%"></stop>
+				<stop stop-color="#348" offset="100%"></stop>
+			</linearGradient>
+			<mask id="textMask">
+				<g filter="url(#texteffect)">
+					<polyline stroke="#fff" points="840,17 720,17 696,33.1 552,33.1 528,17.1 312,17.1 288,33.1 144,33.1 120,17 0,17 "/>
+					<polyline stroke="#fff" points="840,542 720,542 696,525.9 552,525.9 528,541.9 312,541.9 288,525.9 144,525.9 120,542 0,542 "/>
+					<text id="title" x="420" y="120" text-anchor="middle" fill="#fff">xx142-b2</text>
+					<text id="level" x="420" y="120" text-anchor="middle" fill="#fff">Level 1</text>
+				</g>
+			</mask>
+		</defs>
+		<rect id="fill" mask="url(#textMask)" fill="url(#gradient)" x="0" y="0" width="4000" height="560"></rect>
+	</svg>
 
+
+	<div class="view-intro">
 		<p class="intro">
 			Humanity is enslaved by an alien race for more than two centuries already.<br/><br/>
 			You are an AI weaponized virus built to infiltrate the alien network and deactivate all power generators and weapon systems.<br/><br/>
@@ -78,5 +80,13 @@
 
 	<div class="view-game">
 		<canvas class="cvs"></canvas>
+	</div>
+
+	<div class="view-level">
+		
+	</div>
+
+	<div class="view-pause">
+		<h2>Pause</h2>
 	</div>
 </content>

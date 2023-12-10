@@ -12,9 +12,26 @@ content {
 	font-size: 17px;
 
 	&[data-show="intro"] {
+		.hud,
 		div.view-intro {
 			opacity: 1;
 			visibility: visible;
+
+			#title {
+				display: block;
+			}
+		}
+	}
+
+	&[data-show="level"] {
+		.hud,
+		div.view-level {
+			opacity: 1;
+			visibility: visible;
+
+			#level {
+				display: block;
+			}
 		}
 	}
 
@@ -22,6 +39,26 @@ content {
 		div.view-game {
 			opacity: 1;
 			visibility: visible;
+		}
+	}
+
+	.hud {
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+
+		#level,
+		#title {
+			display: none;
+			font-size: 80px;
+			font-family: Righteous, sans-serif;
+		}
+
+		#fill {
+			animation: shift 8s linear infinite;
 		}
 	}
 
@@ -50,15 +87,6 @@ content {
 				pointer-events: none;
 				background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #22229955 21px),
 							repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #22229955 21px);
-			}
-
-			#text {
-				font-size: 80px;
-				font-family: Righteous, sans-serif;
-			}
-
-			#fill {
-				animation: shift 8s linear infinite;
 			}
 
 			.intro {

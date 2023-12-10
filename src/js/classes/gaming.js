@@ -58,9 +58,18 @@ class Gaming {
 		return this._pause;
 	}
 
+	over() {
+		this.el.data({ show: "intro" });
+		// reset values
+		this.state = STATE_TITLE;
+		this.fadeTimer = 0;
+		this.fpsControl.stop();
+		this._pause = true;
+	}
+
 	start() {
 		this.el.data({ show: "game" });
-		
+		// game values
 		this.state = STATE_FADEIN;
 		this.fadeTimer = 1.0;
 		this.fpsControl.start();
@@ -68,13 +77,15 @@ class Gaming {
 	}
 
 	pause() {
-		console.log("stopped");
+		this.el.data({ show: "pause" });
+		// pause game
 		this.fpsControl.stop();
 		this._pause = true;
 	}
 
 	resume() {
-		console.log("resumed");
+		this.el.data({ show: "game" });
+		// resume game
 		this.fpsControl.start();
 		this._pause = false;
 	}

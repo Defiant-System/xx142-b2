@@ -284,7 +284,7 @@ class Drawing {
 	}
 
 	titleScreen() {
-		console.log("titleScreen");
+		// console.log("titleScreen");
 	}
 
 	endScreen() {
