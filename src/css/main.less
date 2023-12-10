@@ -8,14 +8,77 @@ content {
 	right: 0;
 	bottom: 0;
 	border-radius: inherit;
+	font-family: monospace;
+	font-size: 17px;
+
+	&[data-show="intro"] {
+		div.view-intro {
+			display: block;
+		}
+	}
+
+	&[data-show="game"] {
+		div.view-game {
+			display: block;
+		}
+	}
 
 	> div {
+		display: none;
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
 		border-radius: inherit;
+
+		&.view-intro {
+			background: radial-gradient(#112, #001);
+			overflow: hidden;
+			// transform: translate(-50%, -50%);
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 1px;
+				bottom: 1px;
+				pointer-events: none;
+				background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #22229933 21px),
+							repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #22229933 21px);
+			}
+
+			#text {
+				font-size: 80px;
+				font-family: Righteous, sans-serif;
+			}
+
+			#fill {
+				animation: shift 8s linear infinite;
+			}
+
+			.intro {
+				position: absolute;
+				top: 150px;
+				left: 0;
+				right: 0;
+				padding: 0px 90px;
+				text-align: center;
+				line-height: 1.35;
+				color: #f0ffff99;
+				text-shadow: 0 0 5px #aaf,
+							0 0 10px #1e90ff,
+							0 0 15px #0000ff;
+			}
+
+			.controls {
+				position: absolute;
+				top: 440px;
+				left: 200px;
+				width: 200px;
+			}
+		}
 
 		&.view-game {
 			canvas {
@@ -28,4 +91,21 @@ content {
 			}
 		}
 	}
+}
+
+
+@keyframes shift {
+	0%   { x: -2000; }
+	100% { x: 0; }
+}
+
+
+// custom fonts
+@font-face {
+	font-family: "Righteous";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(~/fonts/Righteous-latin.woff2) format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
