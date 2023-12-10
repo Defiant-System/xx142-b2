@@ -183,8 +183,6 @@ class Gaming {
 				// this.state = STATE_FADEOUT;
 				// this.fadeTimer = 1.0;
 				this.player.movementVector = new Vec2(0, 0); //stops flickering while fading out
-
-				console.log(this.currentLevel + 1);
 				this.loadLevel(this.currentLevel + 1);
 
 				this.state = STATE_LEVEL;
