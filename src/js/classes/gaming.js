@@ -16,6 +16,8 @@ class Gaming {
 		this.fadeTimer = 0;
 		this.state = STATE_TITLE;
 
+		this.el = xx142b2.content;
+
 		this.level;
 		this.levels = levels;
 		this.levelNameShowed = -1
@@ -57,7 +59,8 @@ class Gaming {
 	}
 
 	start() {
-		console.log("started");
+		this.el.data({ show: "game" });
+		
 		this.state = STATE_FADEIN;
 		this.fadeTimer = 1.0;
 		this.fpsControl.start();

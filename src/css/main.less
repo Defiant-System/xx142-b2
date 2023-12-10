@@ -13,29 +13,32 @@ content {
 
 	&[data-show="intro"] {
 		div.view-intro {
-			display: block;
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 
 	&[data-show="game"] {
 		div.view-game {
-			display: block;
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 
 	> div {
-		display: none;
+		opacity: 0;
+		visibility: hidden;
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
 		border-radius: inherit;
+		transition: opacity 300ms ease-in-out;
 
 		&.view-intro {
-			background: radial-gradient(#112, #001);
+			background: radial-gradient(#223, #001);
 			overflow: hidden;
-			// transform: translate(-50%, -50%);
 
 			&:before {
 				content: "";
@@ -45,8 +48,8 @@ content {
 				right: 1px;
 				bottom: 1px;
 				pointer-events: none;
-				background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #22229933 21px),
-							repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #22229933 21px);
+				background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #22229955 21px),
+							repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #22229955 21px);
 			}
 
 			#text {
@@ -66,17 +69,77 @@ content {
 				padding: 0px 90px;
 				text-align: center;
 				line-height: 1.35;
-				color: #f0ffff99;
+				color: #f0ffff77;
 				text-shadow: 0 0 5px #aaf,
 							0 0 10px #1e90ff,
 							0 0 15px #0000ff;
+
+				br {
+					height: 5px;
+				}
 			}
 
 			.controls {
 				position: absolute;
-				top: 440px;
-				left: 200px;
-				width: 200px;
+				top: 430px;
+				left: 0;
+				right: 0;
+				text-align: center;
+
+				.column {
+					text-align: left;
+					display: inline-block;
+					width: 160px;
+
+					> div {
+						height: 41px;
+					}
+				}
+
+				h3 {
+					display: inline-block;
+					white-space: nowrap;
+					padding-top: 6px;
+					font-weight: 100;
+					font-size: 17px;
+					color: #f0ffff;
+					text-shadow: 0 0 5px #aaf,
+								0 0 10px #1e90ff,
+								0 0 15px #0000ff;
+				}
+
+				.key {
+					background: #88f;
+					position: relative;
+					display: inline-block;
+					width: 29px;
+					height: 29px;
+					border-radius: 5px;
+					margin: 0 1px 0 0;
+					vertical-align: top;
+					box-shadow: 0 0 5px #1e90ff,
+								0 0 9px #0000dd;
+
+					&:before {
+						content: "";
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						background-position: 5px 5px;
+						background-size: 23px 23px;
+						background-repeat: no-repeat;
+						filter: drop-shadow(0 1px 0 rgba(#226,.35));
+					}
+
+					&.icon-arrow-left:before  { background-image: url(~/icons/icon-arrow-left.png); }
+					&.icon-arrow-right:before { background-image: url(~/icons/icon-arrow-right.png); }
+					&.icon-arrow-up:before    { background-image: url(~/icons/icon-arrow-up.png); }
+					&.icon-arrow-down:before  { background-image: url(~/icons/icon-arrow-down.png); }
+					&.icon-escape:before      { background-image: url(~/icons/icon-escape.png); background-position: 50% 50%; }
+					&.icon-backspace:before   { background-image: url(~/icons/icon-backspace.png); background-position: 50% 50%; }
+				}
 			}
 		}
 

@@ -48,12 +48,13 @@ const xx142b2 = {
 				}
 				// console.log(event);
 				switch (event.char) {
+					case "esc": Game.start(); break;
 					case "w":
-					case "up":    Game.buttons.up = true; break;
+					case "up": Game.buttons.up = true; break;
 					case "s":
-					case "down":  Game.buttons.down = true; break;
+					case "down": Game.buttons.down = true; break;
 					case "a":
-					case "left":  Game.buttons.left = true; break;
+					case "left": Game.buttons.left = true; break;
 					case "d":
 					case "right": Game.buttons.right = true; break;
 					case "backspace": Game.die(); break;
@@ -63,11 +64,11 @@ const xx142b2 = {
 			case "window.keyup":
 				switch (event.char) {
 					case "w":
-					case "up":    Game.buttons.up = false; break;
+					case "up": Game.buttons.up = false; break;
 					case "s":
-					case "down":  Game.buttons.down = false; break;
+					case "down": Game.buttons.down = false; break;
 					case "a":
-					case "left":  Game.buttons.left = false; break;
+					case "left": Game.buttons.left = false; break;
 					case "d":
 					case "right": Game.buttons.right = false; break;
 				}

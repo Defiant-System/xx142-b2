@@ -3,7 +3,7 @@
 		<svg class="intro-view" viewBox="0 0 840 560">
 			<defs>
 				<filter id="texteffect">
-					<feGaussianBlur in="SourceGraphic" stdDeviation="3"></feGaussianBlur>
+					<feGaussianBlur in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
 					<feComponentTransfer>
 						<feFuncA type="linear" slope="1" intercept="0"></feFuncA>
 					</feComponentTransfer>
@@ -20,14 +20,14 @@
 					<feGaussianBlur stdDeviation="1"></feGaussianBlur>
 				</filter>
 				<linearGradient id="gradient" color-interpolation="sRGB" spreadMethod="repeat" x1="0" x2="0.25" y1="0.01" y2="0">
-					<stop stop-color="#124" offset="0%"></stop>
-					<stop stop-color="#69f" offset="50%"></stop>
-					<stop stop-color="#124" offset="100%"></stop>
+					<stop stop-color="#348" offset="0%"></stop>
+					<stop stop-color="#aaf" offset="50%"></stop>
+					<stop stop-color="#348" offset="100%"></stop>
 				</linearGradient>
 				<mask id="textMask">
 					<g filter="url(#texteffect)">
-						<rect x="0" y="25" width="840" height="1" fill="#fff"></rect>
-						<rect x="0" y="535" width="840" height="1" fill="#fff"></rect>
+						<polyline stroke="#fff" points="840,17 720,17 696,33.1 552,33.1 528,17.1 312,17.1 288,33.1 144,33.1 120,17 0,17 "/>
+						<polyline stroke="#fff" points="840,542 720,542 696,525.9 552,525.9 528,541.9 312,541.9 288,525.9 144,525.9 120,542 0,542 "/>
 						<text id="text" x="420" y="120" text-anchor="middle" fill="#fff">xx142-b2</text>
 					</g>
 				</mask>
@@ -43,9 +43,36 @@
 		</p>
 
 		<div class="controls">
-			Controls:<br/>
-			WASD / Arrows - movement<br/>
-			Backspace     - kill -9
+			<div class="column">
+				<div>
+					<span class="key icon-arrow-up"></span>
+					<h3>Up</h3>
+				</div>
+				<div>
+					<span class="key icon-arrow-down"></span>
+					<h3>Down</h3>
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<span class="key icon-arrow-left"></span>
+					<h3>Left</h3>
+				</div>
+				<div>
+					<span class="key icon-arrow-right"></span>
+					<h3>Right</h3>
+				</div>
+			</div>
+			<div class="column">
+				<div>
+					<span class="key icon-escape"></span>
+					<h3>New Game</h3>
+				</div>
+				<div>
+					<span class="key icon-backspace"></span>
+					<h3>kill -9</h3>
+				</div>
+			</div>
 		</div>
 	</div>
 
