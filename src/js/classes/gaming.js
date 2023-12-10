@@ -143,6 +143,12 @@ class Gaming {
 						Draw.ghost(g);
 					}
 				}
+				if (this.state === STATE_FADEOUT && this.fadeTimer < 0) {
+					this.loadLevel(this.currentLevel + 1);
+					this.state = STATE_LEVEL;
+					this.levelTimer = 2;
+					this.el.data({ show: "level" });
+				}
 				Draw.timer(this.currentTick / settings_tps);
 				break;
 			case STATE_COMPLETE:
@@ -180,14 +186,9 @@ class Gaming {
 
 		if (this.state === STATE_PLAY) {
 			if (this.level.completed) {
-				// this.state = STATE_FADEOUT;
-				// this.fadeTimer = 1.0;
+				this.state = STATE_FADEOUT;
+				this.fadeTimer = 1.0;
 				this.player.movementVector = new Vec2(0, 0); //stops flickering while fading out
-				this.loadLevel(this.currentLevel + 1);
-
-				this.state = STATE_LEVEL;
-				this.levelTimer = 2;
-				this.el.data({ show: "level" });
 
 				Sounds.win();
 				return;
