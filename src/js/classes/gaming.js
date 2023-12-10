@@ -6,6 +6,9 @@ let STATE_DEAD = 3
 let STATE_FADEOUT = 4
 let STATE_COMPLETE = 5
 
+let STATE_LEVEL = 6
+
+
 class Gaming {
 	constructor(levels) {
 		this.player;
@@ -14,13 +17,13 @@ class Gaming {
 		this.history = [];
 		this.currentLevel = 0;
 		this.fadeTimer = 0;
+		this.levelTimer = 0;
 		this.state = STATE_TITLE;
 
 		this.el = xx142b2.content;
 
 		this.level;
 		this.levels = levels;
-		this.levelNameShowed = -1
 		this.buttons = {}
 
 		this.loadLevel(this.currentLevel);
@@ -68,12 +71,11 @@ class Gaming {
 	}
 
 	start() {
-		this.el.data({ show: "game" });
+		this.el.data({ show: "level" });
 		// game values
-		this.state = STATE_FADEIN;
-		this.fadeTimer = 1.0;
+		this.state = STATE_LEVEL;
+		this.levelTimer = 2;
 		this.fpsControl.start();
-		this._pause = false;
 	}
 
 	pause() {
@@ -109,6 +111,7 @@ class Gaming {
 	}
 
 	die() {
+		if (this.state !== STATE_PLAY) return;
 		Sounds.death();
 		this.state = STATE_DEAD;
 	}
@@ -118,6 +121,14 @@ class Gaming {
 		switch (this.state) {
 			case STATE_TITLE:
 				Draw.titleScreen();
+				break;
+			case STATE_LEVEL:
+				if (this.levelTimer < 0) {
+					this.el.data({ show: "game" });
+					this.state = STATE_FADEIN;
+					this.fadeTimer = 1.0;
+					this._pause = false;
+				}
 				break;
 			case STATE_FADEIN:
 			case STATE_FADEOUT:
@@ -141,9 +152,10 @@ class Gaming {
 	}
 
 	tick() {
-		if (this.state === STATE_FADEIN && this.levelNameShowed !== this.currentLevel) {
-			this.levelNameShowed = this.currentLevel;
-			console.log(this.level.last ? "THE MEMORY CORE" : `Level ${this.currentLevel}`);
+		if (this.state === STATE_LEVEL) {
+			if (this.levelTimer > 0) {
+				this.levelTimer -= 1 / settings_tps;
+			}
 		}
 
 		if (this.state === STATE_FADEIN || this.state === STATE_FADEOUT) {
@@ -168,9 +180,17 @@ class Gaming {
 
 		if (this.state === STATE_PLAY) {
 			if (this.level.completed) {
-				this.state = STATE_FADEOUT;
+				// this.state = STATE_FADEOUT;
+				// this.fadeTimer = 1.0;
 				this.player.movementVector = new Vec2(0, 0); //stops flickering while fading out
-				this.fadeTimer = 1.0;
+
+				console.log(this.currentLevel + 1);
+				this.loadLevel(this.currentLevel + 1);
+
+				this.state = STATE_LEVEL;
+				this.levelTimer = 2;
+				this.el.data({ show: "level" });
+
 				Sounds.win();
 				return;
 			}
@@ -185,15 +205,15 @@ class Gaming {
 			++this.currentTick;
 		}
 
-		if (this.state === STATE_FADEOUT && this.fadeTimer <= 0) {
-			if (this.level.last) {
-				console.log("started won");
-			} else {
-				this.loadLevel(this.currentLevel + 1);
-				this.state = STATE_FADEIN;
-				this.fadeTimer = 1.0;
-			}
-		}
+		// if (this.state === STATE_FADEOUT && this.fadeTimer <= 0) {
+		// 	if (this.level.last) {
+		// 		console.log("started won");
+		// 	} else {
+		// 		this.loadLevel(this.currentLevel + 1);
+		// 		this.state = STATE_FADEIN;
+		// 		this.fadeTimer = 1.0;
+		// 	}
+		// }
 	}
 
 	loadLevel(index) {
@@ -207,5 +227,9 @@ class Gaming {
 		this.ghosts = [];
 		this.currentTick = 0;
 		Draw.resetCamera();
+
+		// output level info on screen
+		this.el.find("#level").html(this.level.last ? "Memory Core" : `Level ${index+1}`);
+
 	}
 }

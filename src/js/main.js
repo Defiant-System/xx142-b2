@@ -21,6 +21,7 @@
 let Draw;
 let Game;
 let levelIndex = 0;
+let SoundFx = false;
 
 
 const xx142b2 = {
@@ -49,11 +50,8 @@ const xx142b2 = {
 				// console.log(event);
 				switch (event.char) {
 					case "esc":
-						if (Game.state === 0) {
-							Game.start();
-						} else {
-							Game.over();
-						}
+						Game.loadLevel(0);
+						Game.over();
 						break;
 					case "w":
 					case "up": Game.buttons.up = true; break;
@@ -65,6 +63,10 @@ const xx142b2 = {
 					case "right": Game.buttons.right = true; break;
 					case "backspace": Game.die(); break;
 					case "p": Game[Game.paused ? "resume" : "pause" ](); break;
+					default:
+						if (Game.state === STATE_TITLE) {
+							Game.start();
+						}
 				}
 				break;
 			case "window.keyup":

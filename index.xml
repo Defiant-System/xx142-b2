@@ -7,11 +7,11 @@
 		<meta name="repository" value="https://github.com/Defiant-System/xx142b2"/>
 		<meta name="width" value="840"/>
 		<meta name="height" value="560"/>
-		<meta name="top" value="120"/>
-		<meta name="left" value="120"/>
+		<meta name="top" value="170"/>
+		<meta name="left" value="100"/>
 		<meta name="minimize"/>
-		<meta name="maximize"/>
-		<meta name="resize"/>
+		<meta name="maximize" value="disabled"/>
+		<meta name="resize" value="disabled"/>
 		<meta name="script" value="src/js/main.js"/>
 		<meta name="style" value="src/css/main.less"/>
 		<meta name="icons" value="src/svg/icons.svg"/>

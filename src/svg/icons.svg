@@ -1,5 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
 
+	<defs>
+		<filter id="xx142b2-distort">
+			<feTurbulence baseFrequency="0.03 0.075" result="noise" numOctaves="3" />
+			<feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="R"/>
+		</filter>
+	</defs>
+
 	<svg id="icon-arrow-left" viewBox="0 0 51 51">
 		<style type="text/css">
 			.st0{fill:#ddf;}
