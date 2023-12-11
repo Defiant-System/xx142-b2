@@ -120,7 +120,6 @@ class Gaming {
 		Draw.accumulator = accumulator;
 		switch (this.state) {
 			case STATE_TITLE:
-				Draw.titleScreen();
 				break;
 			case STATE_LEVEL:
 				if (this.levelTimer < 0) {
@@ -152,7 +151,9 @@ class Gaming {
 				Draw.timer(this.currentTick / settings_tps);
 				break;
 			case STATE_COMPLETE:
-				Draw.endScreen();
+				this._pause = true;
+				this.fpsControl.stop();
+				this.el.data({ show: "congrats" });
 				break;
 		}
 	}
@@ -219,6 +220,7 @@ class Gaming {
 		this.currentLevel = index;
 		if (index >= this.levels.length) {
 			this.state = STATE_COMPLETE;
+			return;
 		}
 		this.level = new Level(this.levels[index]);
 		this.history = [];

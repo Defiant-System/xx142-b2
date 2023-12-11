@@ -286,14 +286,6 @@ class Drawing {
 		this.gl.uniform3f(this.uTranslation, 0, 0, 0);
 	}
 
-	titleScreen() {
-		// console.log("titleScreen");
-	}
-
-	endScreen() {
-		console.log("endScreen");
-	}
-
 	calcViewMatrix(out = this.viewMatrix) {
 		out.set(mat4Identity);
 		mat4RotateX(out, this.cameraRotX);

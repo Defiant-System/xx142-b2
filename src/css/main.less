@@ -1,5 +1,6 @@
 
 background: #000;
+overflow: visible;
 
 content {
 	position: absolute;
@@ -63,6 +64,14 @@ content {
 
 	&[data-show="game"] {
 		div.view-game {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+
+	&[data-show="congrats"] {
+		div.view-game,
+		div.view-congrats {
 			opacity: 1;
 			visibility: visible;
 		}
@@ -156,7 +165,6 @@ content {
 
 		&.view-pause {
 			.distort {
-				content: "";
 				position: absolute;
 				top: -5px;
 				left: -5px;
@@ -182,6 +190,78 @@ content {
 				text-shadow: 0 0 5px #aaf,
 							0 0 10px #1e90ff,
 							0 0 15px #0000ff;
+			}
+		}
+
+		&.view-congrats {
+			perspective: 100px;
+
+			.distort {
+				position: absolute;
+				top: 11px;
+				left: 11px;
+				right: 11px;
+				bottom: 11px;
+				z-index: 1;
+				background-color: rgba(#002,.5);
+				backdrop-filter: blur(3px);
+				border-radius: 9px;
+			}
+
+			h2,
+			h3 {
+				position: absolute;
+				left: 0;
+				right: 0;
+				text-align: center;
+				padding-top: 11px;
+				font-weight: 400;
+				z-index: 3;
+				font-family: Righteous, sans-serif;
+			}
+
+			h2 {
+				top: 160px;
+				font-size: 70px;
+				transform: translateZ(0);
+				text-shadow: 0 0 5px #aaf,
+							0 0 10px #1e90ff,
+							0 0 15px #0000ff;
+				animation: textBounce 1000ms 3 ease-in-out;
+			}
+
+			h3 {
+				top: 260px;
+				font-size: 35px;
+				color: #f0ffff99;
+				text-shadow: 0 0 5px #aaf,
+							0 0 10px #1e90ff,
+							0 0 15px #0000ff;
+			}
+
+			.pyro {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 100;
+
+				> .before,
+				> .after {
+					position: absolute;
+					width: 4px;
+					height: 4px;
+					border-radius: 50%;
+					.pyroShadowLoop(50);
+					animation: 1s bang ease-out 5 backwards,
+								1s gravity ease-in 5 backwards,
+								4s position linear 5 backwards;
+				}
+
+				> .after {
+					animation-delay: 1.25s, 1.25s, 1.25s;
+					animation-duration: 1.25s, 1.25s, 6.25s;
+				}
 			}
 		}
 
@@ -252,6 +332,110 @@ content {
 @keyframes shift {
 	0%   { x: -2000; }
 	100% { x: 0; }
+}
+
+@keyframes gravity {
+	to {
+		transform: translateY(200px);
+		opacity: 0;
+	}
+}
+
+@keyframes position {
+	0%,
+	19.9% {
+		margin-top: 10%;
+		margin-left: 40%;
+	}
+	20%,
+	39.9% {
+		margin-top: 40%;
+		margin-left: 30%;
+	}
+	40%,
+	59.9% {
+		margin-top: 20%;
+		margin-left: 70%;
+	}
+	60%,
+	79.9% {
+		margin-top: 30%;
+		margin-left: 20%;
+	}
+	80%,
+	99.9% {
+		margin-top: 30%;
+		margin-left: 80%;
+	}
+}
+
+@keyframes textBounce {
+	0%, 20%, 50%, 80%, 100% { transform: translateZ(0); }
+	45% { transform: translateZ(-20px); }
+	60% { transform: translateZ(-10px); }
+}
+
+
+.pyroShadowLoop(@count) when (@count > 0) {
+	.pyroShadowLoop(@count - 1);
+	box-shadow+: 0 0 #fff;
+}
+
+// copied from: https://codepen.io/yshlin/pen/ylDEk
+@keyframes bang {
+	to {
+		box-shadow: -195px -358.6666666667px #ff3300,
+					-188px 74.3333333333px #9dff00,
+					86px -174.6666666667px #ff001e,
+					-70px -41.6666666667px #7b00ff,
+					199px -331.6666666667px #ff00d5,
+					-70px -103.6666666667px #c4ff00,
+					4px -387.6666666667px #00eeff,
+					-61px -229.6666666667px #ff002f,
+					112px -146.6666666667px #00ffdd,
+					187px 67.3333333333px #ff00b7,
+					-50px -396.6666666667px #5500ff,
+					177px -356.6666666667px #00eeff,
+					-165px -120.6666666667px #ff00b3,
+					151px 37.3333333333px #ff007b,
+					17px -32.6666666667px #00ff26,
+					215px -115.6666666667px #8cff00,
+					-139px -41.6666666667px #77ff00,
+					-84px -100.6666666667px #ff009d,
+					-90px -130.6666666667px #91ff00,
+					-100px -343.6666666667px #2600ff,
+					222px -415.6666666667px #9900ff,
+					-102px -216.6666666667px #ff0051,
+					-135px -414.6666666667px #00ff1e,
+					-130px -80.6666666667px #00ff73,
+					-83px -50.6666666667px #0d00ff,
+					149px -135.6666666667px #002bff,
+					-174px -307.6666666667px #004dff,
+					-155px -252.6666666667px #00ffb3,
+					28px -402.6666666667px #ffd000,
+					-150px -236.6666666667px #00ffd9,
+					249px -164.6666666667px #ff0004,
+					49px -94.6666666667px #1aff00,
+					-216px -98.6666666667px #00ff77,
+					-101px -147.6666666667px #2200ff,
+					240px 1.3333333333px #00ffea,
+					-55px -139.6666666667px #ff5900,
+					-120px 1.3333333333px #ff8800,
+					75px -265.6666666667px #00ffbb,
+					204px -4.6666666667px #ff00ea,
+					-76px -108.6666666667px #0044ff,
+					-180px -48.6666666667px #ff5500,
+					-129px -367.6666666667px #8000ff,
+					-19px -189.6666666667px #91ff00,
+					210px -100.6666666667px #ffc400,
+					-71px -170.6666666667px #00ff33,
+					-155px -117.6666666667px #0091ff,
+					66px -259.6666666667px #00ff9d,
+					98px -3.6666666667px #0026ff,
+					-143px -128.6666666667px #0dff00,
+					127px -47.6666666667px #00b3ff,
+					79px -216.6666666667px #ff00d9;
+	}
 }
 
 
