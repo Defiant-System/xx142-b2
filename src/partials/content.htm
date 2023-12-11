@@ -4,7 +4,7 @@
 			<filter id="texteffect">
 				<feGaussianBlur in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
 				<feComponentTransfer>
-					<feFuncA type="linear" slope="1" intercept="0"></feFuncA>
+					<feFuncA type="linear" slope="5" intercept="0"></feFuncA>
 				</feComponentTransfer>
 				<feComposite result="outer" in2="SourceGraphic" operator="out"></feComposite>
 				<feGaussianBlur result="pre-inner" in="SourceGraphic" stdDeviation="2"></feGaussianBlur>
@@ -19,14 +19,14 @@
 				<feGaussianBlur stdDeviation="1"></feGaussianBlur>
 			</filter>
 			<linearGradient id="gradient" color-interpolation="sRGB" spreadMethod="repeat" x1="0" x2="0.25" y1="0.01" y2="0">
-				<stop stop-color="#348" offset="0%"></stop>
-				<stop stop-color="#aaf" offset="50%"></stop>
-				<stop stop-color="#348" offset="100%"></stop>
+				<stop stop-color="#55d" offset="0%"></stop>
+				<stop stop-color="#ccf" offset="50%"></stop>
+				<stop stop-color="#55d" offset="100%"></stop>
 			</linearGradient>
 			<mask id="textMask">
 				<g filter="url(#texteffect)">
-					<polyline stroke="#fff" points="840,17 720,17 696,33.1 552,33.1 528,17.1 312,17.1 288,33.1 144,33.1 120,17 0,17 "/>
-					<polyline stroke="#fff" points="840,542 720,542 696,525.9 552,525.9 528,541.9 312,541.9 288,525.9 144,525.9 120,542 0,542 "/>
+					<polyline stroke="#666" fill="none" stroke-width=".5" points="840,17 720,17 696,33.1 552,33.1 528,17.1 312,17.1 288,33.1 144,33.1 120,17 0,17 "/>
+					<polyline stroke="#666" fill="none" stroke-width=".5" points="840,542 720,542 696,525.9 552,525.9 528,541.9 312,541.9 288,525.9 144,525.9 120,542 0,542 "/>
 					<text id="title" x="420" y="140" text-anchor="middle" fill="#fff">xx142-b2</text>
 					<text id="pause" x="420" y="140" text-anchor="middle" fill="#fff">Paused</text>
 					<text id="level" x="420" y="140" text-anchor="middle" fill="#fff"></text>

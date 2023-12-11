@@ -11,7 +11,22 @@ content {
 	font-family: monospace;
 	font-size: 17px;
 
+	&:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 1px;
+		bottom: 1px;
+		z-index: 1;
+		pointer-events: none;
+		background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #22229955 21px),
+					repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #22229955 21px),
+					radial-gradient(#223, #001);
+	}
+
 	&[data-show="intro"] {
+		&:before { content: ""; }
+
 		.hud,
 		div.view-intro {
 			opacity: 1;
@@ -24,6 +39,8 @@ content {
 	}
 
 	&[data-show="level"] {
+		&:before { content: ""; }
+
 		.hud,
 		div.view-level {
 			opacity: 1;
@@ -57,7 +74,7 @@ content {
 		position: absolute;
 		top: 0;
 		left: 0;
-		z-index: 2;
+		z-index: 3;
 		pointer-events: none;
 
 		#level,
@@ -81,24 +98,12 @@ content {
 		left: 0;
 		right: 0;
 		bottom: 0;
+		z-index: 2;
 		border-radius: inherit;
 		transition: opacity 700ms ease-in-out;
 
 		&.view-intro {
-			background: radial-gradient(#223, #001);
 			overflow: hidden;
-
-			&:before {
-				content: "";
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 1px;
-				bottom: 1px;
-				pointer-events: none;
-				background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #22229955 21px),
-							repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #22229955 21px);
-			}
 
 			.intro {
 				position: absolute;
@@ -208,7 +213,7 @@ content {
 			}
 
 			.key {
-				background: #88f;
+				background: #448;
 				position: relative;
 				display: inline-block;
 				width: 29px;
