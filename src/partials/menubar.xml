@@ -2,6 +2,8 @@
 	<Menu name="xx142-b2">
 		<Menu name="About xx142-b2" shell="win -a"/>
 		<Menu type="divider"/>
+		<Menu name="Sound FX" click="toggle-sound-fx" is-checked="1"/>
+		<Menu type="divider"/>
 		<Menu name="Quit xx142-b2" shell="win -c"/>
 	</Menu>
 	<Menu name="Help">

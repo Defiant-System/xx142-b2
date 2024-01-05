@@ -21,7 +21,7 @@
 let Draw;
 let Game;
 let levelIndex = 0;
-let SoundFx = false;
+let SoundFx = true;
 
 
 const xx142b2 = {
@@ -32,7 +32,6 @@ const xx142b2 = {
 		Draw = new Drawing(window.find("canvas.cvs"));
 		Game = new Gaming(levels);
 		Game.loadLevel(levelIndex);
-
 
 		// DEV-ONLY-START
 		Test.init(this);
@@ -82,6 +81,11 @@ const xx142b2 = {
 				}
 				break;
 			// custom events
+			case "toggle-sound-fx":
+				SoundFx = !SoundFx;
+				if (SoundFx === true) event.xMenu.setAttribute("is-checked", 1);
+				else event.xMenu.removeAttribute("is-checked");
+				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
 				break;
