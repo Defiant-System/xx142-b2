@@ -292,16 +292,15 @@ content {
 			}
 
 			.key {
-				background: #448;
+				background: #559;
 				position: relative;
 				display: inline-block;
-				width: 29px;
-				height: 29px;
+				width: 33px;
+				height: 30px;
 				border-radius: 5px;
 				margin: 0 1px 0 0;
 				vertical-align: top;
-				// box-shadow: 0 0 5px #1e90ff,
-				// 			0 0 9px #0000dd;
+				box-shadow: 0px 3px 0px 0px #557;
 
 				&:before {
 					content: "";
@@ -310,10 +309,32 @@ content {
 					left: 0;
 					right: 0;
 					bottom: 0;
-					background-position: 5px 5px;
-					background-size: 23px 23px;
+					background-position: 8px 7px;
+					background-size: 21px 21px;
 					background-repeat: no-repeat;
-					filter: drop-shadow(0 1px 0 rgba(#226,.35));
+					filter: drop-shadow(0 1px 0 rgba(#226,.5));
+				}
+
+				&:after {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					border-radius: inherit;
+					background-image: radial-gradient(ellipse at bottom center, #ffffff77, transparent);
+					pointer-events: none;
+				}
+
+				&.icon-backspace {
+					background: #272;
+					box-shadow: 0px 3px 0px 0px #161;
+				}
+
+				&.icon-escape {
+					background: #833;
+					box-shadow: 0px 3px 0px 0px #633;
 				}
 
 				&.icon-arrow-left:before  { background-image: url(~/icons/icon-arrow-left.png); }
