@@ -42,6 +42,9 @@ const xx142b2 = {
 			// system events
 			case "window.init":
 				break;
+			case "window.close":
+				Game.pause();
+				break;
 			case "window.keydown":
 				if (Game.state === STATE_FADEIN && Game.fadeTimer <= 0) {
 					Game.state = STATE_PLAY;

@@ -1,7 +1,7 @@
 <Application>
 	<Head>
 		<meta name="id" value="xx142b2"/>
-		<meta name="title" value="xx142-b2" version="1.25"/>
+		<meta name="title" value="xx142-b2" version="1.26"/>
 		<meta name="author" value="Ben Clark" namespace="ant" ported="Hakan Bilgin"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="repository" value="https://github.com/Defiant-System/xx142b2"/>
